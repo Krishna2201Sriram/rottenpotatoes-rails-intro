@@ -25,17 +25,17 @@ class MoviesController < ApplicationController
     
     @movies = @movies.order(@sort_asc)
 
-    @checked_ratings = @all_ratings
+    @ratings_to_show = @all_ratings
     
     if params[:ratings]
       session[:ratings] = params[:ratings]
-      @checked_ratings = params[:ratings].keys
+      @ratings_to_show = params[:ratings].keys
     elsif session[:ratings]
       redirect = 1
-      @checked_ratings = session[:ratings].keys
+      @ratings_to_show = session[:ratings].keys
     end
     
-    @movies = @movies.where(rating: @checked_ratings)
+    @movies = @movies.where(rating: @ratings_to_show)
 
   
     if redirect == 1
